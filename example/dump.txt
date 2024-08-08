@@ -1,0 +1,92 @@
+<div class="card text-center" style="padding:20px;">
+  <h3>ECS Load Track Data Web System</h3>
+</div><br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <?php if (isset($errorMsg)) { ?>
+          <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <?php echo $errorMsg; ?>
+          </div>
+        <?php } ?>
+        <form action="" method="POST">
+          <div class="form-group">  
+            <label for="employeeID">Staff ID:</label> 
+            <input type="text" class="form-control" name="username" placeholder="Enter Username" >
+          </div>
+          <div class="form-group">  
+            <label for="employeePwd">Password:</label> 
+            <input type="password" class="form-control" name="password" placeholder="Enter Password">
+          </div>
+        </form>
+      </div>
+  </div>
+</div>
+
+
+SQL Query List
+
+UPDATE 
+
+
+
+<div class="table-responsive">
+               <table class="table table-hover">
+                  <thead>
+                     <tr>
+                        <th>Staff ID</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                     </tr>
+                  </thead>
+
+                  <tbody>
+                     <?php 
+                        if ($_SESSION['employeeRole'] == "superadmin") {
+                           $query1 = "SELECT * FROM loadtrack_admins";
+                        } else {
+                           $role = $_SESSION['employeeRole'];
+                           $query1 = "SELECT * FROM loadtrack_admins WHERE employeeRole ='subadmin'";
+                        }
+
+                        $result1 = $connection->query($query1);
+
+                        if ($result1->num_rows > 0){
+                              while ($row = $result1->fetch_array()) {
+                        ?>
+
+                        <tr>
+                           <td><?php echo $row['employeeID']?></td>
+                           <td><?php echo $row['employeeName']?></td>
+                           <td><?php echo $row['employeeRole']?></td>
+                        </tr>
+
+                        <?php }
+
+                        } else {
+                           echo "<h2> No record found! </h2>";
+                        } ?>
+
+                  </tbody>
+               </table>
+            </div>     
+
+
+<!-- Displaying using Bootstrap-Table -->
+     <!-- <div class="">
+               <table class="table table-light" id="adminTable"
+               data-toggle="true"
+               data-sortable="true">
+                  <thead class="thead-light">
+                     <tr>
+                        <th data-field="employeeID" data-sortable="true">Staff ID</th>
+                        <th data-field="employeeName" data-sortable="true">Name</th>
+                        <th data-field="employeeRole" data-sortable="true">Role</th>
+                        <th data-field="employeePwd" data-sortable="true">Password</th>
+                     </tr>
+                  </thead>
+               </table>
+            </div>         
+            </div> -->
